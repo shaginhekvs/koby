@@ -85,7 +85,7 @@ def create_doc():
     docs = request.args.get('docs')
     clientID = request.args.get('clientID')
     bankID = request.args.get('bankID')
-    if(id == None or name == None):
+    if(id == None or docID == None or clientID == None or bankID == None ):
         return 'Please give args as /create_doc?docID=<>&docs=[<>]&clientID=<>&bankID=<>'
     try:
         #r = requests.post("http://bugs.python.org",
