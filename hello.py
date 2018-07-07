@@ -79,6 +79,32 @@ def create_verifier():
     return jsonify(json.loads(r.text))
 
 
+@app.route('/create_doc', methods=('GET', 'POST'))
+def create_doc():
+    docID = request.args.get('docID')
+    docs = request.args.get('docs')
+    clientID = request.args.get('clientID')
+    bankID = request.args.get('bankID')
+    if(id == None or name == None):
+        return 'Please give args as /create_doc?docID=<>&docs=[<>]&clientID=<>&bankID=<>'
+    try:
+        #r = requests.post("http://bugs.python.org",
+        #                  data={'number': 12524, 'type': 'issue', 'action': 'show'})
+        r = requests.post('http://localhost:3000/api/createDocument',
+            data = {
+            "$class": "org.important.mynetwork.createDocument",
+                "documentID": docID,
+                    "documents": docs,
+                        "clientID": clientID,
+                            "bankID": bankID
+            }) 
+        #print(r.status_code, r.reason)
+    except:
+        return jsonify({'status': 'Error','header':'error'})
+
+    return jsonify(json.loads(r.text))
+
+
 @app.route('/get_client', methods=('GET', 'POST'))
 def get_clien():
     id = request.args.get('id')
