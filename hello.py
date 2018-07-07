@@ -35,7 +35,7 @@ def create_client():
     except:
         return jsonify({'status': 'Error','header':'error'})
 
-    return jsonify({'status': r.status_code,'header':json.dumps(dict(r.content))})
+    return jsonify(json.loads(r.text))
 
 
 
@@ -56,7 +56,7 @@ def create_bank():
     except:
         return jsonify({'status': 'Error','header':'error'})
 
-    return jsonify({'status': r.status_code,'header':json.dumps(dict(r.headers))})
+    return jsonify(json.loads(r.text))
 
 
 
@@ -76,7 +76,7 @@ def create_verifier():
     except:
         return jsonify({'status': 'Error','header':'error'})
 
-    return jsonify({'status': r.status_code,'header':json.dumps(dict(r.headers))})
+    return jsonify(json.loads(r.text))
 
 
 @app.route('/get_client', methods=('GET', 'POST'))
