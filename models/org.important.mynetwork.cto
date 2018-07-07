@@ -23,21 +23,21 @@ namespace org.important.mynetwork
 participant Bank identified by bankID {
   o String bankID
   o String bankName
-  o Double tokenBalance default = 0.0
+  o Double tokenBalance default = 1000.0
   o String [] docsWatching optional
 }
 
 participant Verifier identified by verifierID {
   o String verifierID
   o String verifierName
-  o Double tokenBalance default = 0.0
+  o Double tokenBalance default = 1000.0
   o String [] docsWatching optional
 }
 
 participant Client identified by clientID {
   o String clientID
   o String clientName
-  o Double tokenBalance default = 0.0
+  o Double tokenBalance default = 1000.0
 
 }
 
