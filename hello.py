@@ -135,6 +135,20 @@ def get_bank():
     return jsonify(json.loads(r.text ))
 
 
+@app.route('/get_doc', methods=('GET', 'POST'))
+def get_doc():
+    id = request.args.get('id')
+    if(id == None):
+        return jsonify({'status':'Error','header':'Please give args as /get_doc?id=<>'})
+    
+    try:
+        r = requests.get('http://localhost:3000/api/ClientDocument/{}'.format(id))
+
+    except:
+        return jsonify({'status': 'Error','header':'error'})
+    
+    return jsonify(json.loads(r.text ))
+
 
 @app.route('/get_verifier', methods=('GET', 'POST'))
 def get_verifier():
