@@ -1,0 +1,110 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Write your model definitions here
+ */
+
+namespace org.important.mynetwork
+
+
+
+participant Bank identified by bankID {
+  o String bankID
+  o String bankName
+  o Double tokenBalance default = 0.0
+  o String [] docsWatching optional
+}
+
+participant Verifier identified by verifierID {
+  o String verifierID
+  o String verifierName
+  o Double tokenBalance default = 0.0
+  o String [] docsWatching optional
+}
+
+participant Client identified by clientID {
+  o String clientID
+  o String clientName
+  o Double tokenBalance default = 0.0
+
+}
+
+enum CoinOwnerEntity {
+  o Bank
+  o Verifier
+}
+
+enum VerificationStatus {
+  o Requested
+  o Working
+  o Authentic
+  o Fake
+}
+asset Coin identified by coinID{
+  o String coinID
+  o Double value 
+  o String ownerID
+  o CoinOwnerEntity coinOwnerEntity
+}
+
+asset ClientDocument identified by documentID {
+  o String documentID
+  o String [] documents 
+  --> Client ownerClient
+  --> Bank ownerBank
+  --> Verifier [] verifierSubs optional
+  --> Bank [] bankSubs optional
+  o VerificationStatus verificationStatus default = 'Requested'
+}
+
+
+
+transaction createDocument {
+  o String documentID
+  o String [] documents 
+  o String clientID
+  o String bankID
+
+}
+
+transaction createBank{
+  o String name
+  o String id
+}
+
+transaction createClient {
+  o String name
+  o String id
+}
+
+transaction createVerifier {
+  o String name
+  o String id
+}
+
+transaction clientAllowsBank {
+  o String documentID
+  o String bankID
+}
+
+
+transaction verificationComplete {
+  o String documentID
+  o String verifierID
+  o VerificationStatus status 
+}
+
+
+
