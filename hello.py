@@ -86,7 +86,7 @@ def create_doc():
     clientID = request.args.get('clientID')
     bankID = request.args.get('bankID')
     if(id == None or docID == None or clientID == None or bankID == None ):
-        return 'Please give args as /create_doc?docID=<>&docs=[<>]&clientID=<>&bankID=<>'
+        return 'Please give args as /create_doc?docID=<>&docs=<>&clientID=<>&bankID=<>'
     try:
         #r = requests.post("http://bugs.python.org",
         #                  data={'number': 12524, 'type': 'issue', 'action': 'show'})
@@ -94,7 +94,7 @@ def create_doc():
             data = {
             "$class": "org.important.mynetwork.createDocument",
                 "documentID": docID,
-                    "documents": docs,
+                    "documents": "[\"{}\"]".format(docs),
                         "clientID": clientID,
                             "bankID": bankID
             }) 
@@ -128,6 +128,57 @@ def get_bank():
     
     try:
         r = requests.get('http://localhost:3000/api/Bank/{}'.format(id))
+
+    except:
+        return jsonify({'status': 'Error','header':'error'})
+    
+    return jsonify(json.loads(r.text ))
+
+
+
+@app.route('/get_allbanks', methods=('GET', 'POST'))
+def get_allbanks():
+    
+    try:
+        r = requests.get('http://localhost:3000/api/Bank')
+
+    except:
+        return jsonify({'status': 'Error','header':'error'})
+    
+    return jsonify(json.loads(r.text ))
+
+
+
+@app.route('/get_alldocs', methods=('GET', 'POST'))
+def get_alldocs():
+    
+    try:
+        r = requests.get('http://localhost:3000/api/ClientDocument')
+
+    except:
+        return jsonify({'status': 'Error','header':'error'})
+    
+    return jsonify(json.loads(r.text ))
+
+
+
+@app.route('/get_allvers', methods=('GET', 'POST'))
+def get_allVers():
+    
+    try:
+        r = requests.get('http://localhost:3000/api/Verifier')
+
+    except:
+        return jsonify({'status': 'Error','header':'error'})
+    
+    return jsonify(json.loads(r.text ))
+
+
+@app.route('/get_allclients', methods=('GET', 'POST'))
+def get_allclients():
+    
+    try:
+        r = requests.get('http://localhost:3000/api/Client')
 
     except:
         return jsonify({'status': 'Error','header':'error'})
